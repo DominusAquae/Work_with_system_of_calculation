@@ -33,20 +33,19 @@ class int_n_system_calculation():
         carry_nomber = 0
 
         # Let's go cyclically through each digit of the given numbers in order to organize bitwise addition
-        for i in range(len_of_first_number, 0):
+        for i in range(len_of_first_number - 1, -1, -1):
 
             # Let's understand what number in the decimal system is hidden behind these digits
             a = self.alfabet.index(self.number[i])
-            b = other.alfabet.index(self.number[i])
+            b = other.alfabet.index(other.number[i])
 
             """Этот фрагмент кода будет существовать в таком формате только для выполнения дз
             Автор не принуждает к насилию глаз и просит подождать следующей операции"""
 
             stroka_vuvoda = ""
-            stroka_vuvoda += str(((a + b)%self.number_system_indicator) + carry_nomber)
+            stroka_vuvoda += str((a + b + carry_nomber)%self.number_system_indicator)
             stroka_vuvoda += " пишем, "
-            carry_nomber = (a + b)//self.number_system_indicator
-            stroka_vuvoda += str(carry_nomber)
+            stroka_vuvoda += str((a + b + carry_nomber)//self.number_system_indicator)
             stroka_vuvoda += " в уме"
 
             print(stroka_vuvoda)
@@ -57,7 +56,7 @@ class int_n_system_calculation():
             # a decimal number is obtained, which is the lowest digit of the sum of the total digit of the original numbers. 
             # When adding a carry number, we add the highest digit of the previous sum to the resulting value,
             # thus obtaining the final value in the same digit for the result of the entire calculation.
-            result += self.alfabet[((a + b)%self.number_system_indicator) + carry_nomber]
+            result += self.alfabet[(a + b + carry_nomber)%self.number_system_indicator]
             carry_nomber = (a + b)//self.number_system_indicator
 
         if carry_nomber != 0:
@@ -75,4 +74,4 @@ b = input()
 c = int(input())
 first_n = int_n_system_calculation(a, c)
 second_n = int_n_system_calculation(b, c)
-a + b    
+first_n + second_n    

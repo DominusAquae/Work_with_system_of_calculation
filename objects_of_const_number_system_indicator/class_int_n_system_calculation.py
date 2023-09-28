@@ -13,7 +13,19 @@ class int_n_system_calculation():
         self.alfabet = self.alfabet_start[:self.number_system_indicator]
 
     def __len__(self):
+        #Magic function to simplify code
         return len(self.number)
     
-    
-    
+    def __add__(self, other):
+        #Let's make numbers of equal length
+        len_of_first_number = len(self)
+        len_of_second_number = len(other)
+
+        # If the length of the first is greater than the length of the second,
+        # then add zeros to the beginning of the first so that the length becomes the same
+        
+        if len_of_first_number > len_of_second_number:
+            other.number = "0"*(len_of_first_number - len_of_second_number) + other.number
+        else:
+            self.number = "0"*(-len_of_first_number + len_of_second_number) + self.number
+        

@@ -4,6 +4,8 @@ class int_n_system_calculation():
     # The general alphabet for any valid number system looks like this:
     alfabet_start= "0123456789abcdefghijklmnopqrstuvwxyz"
     
+
+
     def __init__(self, a: str, n: int):
         # String representation of a number:
         self.number = a
@@ -12,11 +14,15 @@ class int_n_system_calculation():
         # Let's limit the existing alphabet
         self.alfabet = self.alfabet_start[:self.number_system_indicator]
 
+
+
     def __len__(self):
         #Magic function to simplify code
         return len(self.number)
     
-    def __add__(self, other):
+
+
+    def t_numbers_to_equal_length(self, other):
         #Let's make numbers of equal length
         len_of_first_number = len(self)
         len_of_second_number = len(other)
@@ -29,6 +35,11 @@ class int_n_system_calculation():
         else:
             self.number = "0"*(-len_of_first_number + len_of_second_number) + self.number
             len_of_first_number = len_of_second_number
+        
+        return len_of_first_number
+
+
+    def __add__(self, other):
         
         #create an empty string (in the future - the result of addition) and carry number
         result = ""
@@ -56,4 +67,8 @@ class int_n_system_calculation():
         """
         Второй и последний кусок вырвиглазного кода
         """
-        return "ответ:", result
+        return result
+    
+
+    def __sub__(self, other):
+        return 0

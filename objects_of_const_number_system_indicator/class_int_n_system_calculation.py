@@ -85,18 +85,14 @@ class int_n_system_calculation():
 
             if a - carry_nomber == -1:
                 result += self.alfabet[a - carry_nomber - b + self.number_system_indicator]
-                print(f"вычитаем из {a - carry_nomber + self.number_system_indicator} {b}, пишем {a - carry_nomber - b + self.number_system_indicator}")
                 carry_nomber = 1
                 continue
             
             if a - carry_nomber < b:
-                print(f"нельзя из {a - carry_nomber} вычесть {b}, занимаем из старшего разряда")
                 result += self.alfabet[a - carry_nomber - b + self.number_system_indicator]
-                print(f"вычитаем из {a - carry_nomber + self.number_system_indicator} {b}, пишем {a - carry_nomber - b + self.number_system_indicator}")
                 carry_nomber = 1
             else:
                 result += self.alfabet[a - carry_nomber - b]
-                print(f"вычитаем из {a - carry_nomber} {b}, пишем {a - carry_nomber - b}")
                 carry_nomber = 0
         result = result[::-1]
         while (i != self.len_of_every_number) and (result[i] == "0"):

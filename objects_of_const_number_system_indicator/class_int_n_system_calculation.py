@@ -1,3 +1,18 @@
+def two_numbers_to_equal_length(self, other):
+        #Let's make numbers of equal length
+        len_of_first_number = len(self)
+        len_of_second_number = len(other)
+
+        # If the length of the first is greater than the length of the second,
+        # then add zeros to the beginning of the first so that the length becomes the same
+        if len_of_first_number > len_of_second_number:
+            other.number = "0"*(len_of_first_number - len_of_second_number) + other.number
+            return len_of_first_number
+        else:
+            self.number = "0"*(-len_of_first_number + len_of_second_number) + self.number
+            return len_of_second_number
+
+
 class int_n_system_calculation():
     
     # boundary of application of the class - positional number system with the last digit z
@@ -22,31 +37,16 @@ class int_n_system_calculation():
     
 
 
-    def t_numbers_to_equal_length(self, other):
-        #Let's make numbers of equal length
-        len_of_first_number = len(self)
-        len_of_second_number = len(other)
-
-        # If the length of the first is greater than the length of the second,
-        # then add zeros to the beginning of the first so that the length becomes the same
-        if len_of_first_number > len_of_second_number:
-            other.number = "0"*(len_of_first_number - len_of_second_number) + other.number
-            len_of_first_number = len_of_first_number
-        else:
-            self.number = "0"*(-len_of_first_number + len_of_second_number) + self.number
-            len_of_first_number = len_of_second_number
-        
-        return len_of_first_number
-
-
     def __add__(self, other):
         
+        self.len_of_every_number = two_numbers_to_equal_length(self, other)
+
         #create an empty string (in the future - the result of addition) and carry number
         result = ""
         carry_nomber = 0
 
         # Let's go cyclically through each digit of the given numbers in order to organize bitwise addition
-        for i in range(len_of_first_number - 1, -1, -1):
+        for i in range(self.len_of_every_number - 1, -1, -1):
 
             # Let's understand what number in the decimal system is hidden behind these digits
             a = self.alfabet.index(self.number[i])
@@ -70,5 +70,45 @@ class int_n_system_calculation():
         return result
     
 
+
     def __sub__(self, other):
-        return 0
+
+        self.len_of_every_number = two_numbers_to_equal_length(self, other)
+
+        result = ""
+        carry_nomber = 0
+        
+        for i in range(self.len_of_every_number - 1, -1, -1):
+
+            a = self.alfabet.index(self.number[i])
+            b = other.alfabet.index(other.number[i])
+
+            if a - carry_nomber == -1:
+                result += self.alfabet[a - carry_nomber - b + self.number_system_indicator]
+                print(f"вычитаем из {a - carry_nomber + self.number_system_indicator} {b}, пишем {a - carry_nomber - b + self.number_system_indicator}")
+                carry_nomber = 1
+                continue
+            
+            if a - carry_nomber < b:
+                print(f"нельзя из {a - carry_nomber} вычесть {b}, занимаем из старшего разряда")
+                result += self.alfabet[a - carry_nomber - b + self.number_system_indicator]
+                print(f"вычитаем из {a - carry_nomber + self.number_system_indicator} {b}, пишем {a - carry_nomber - b + self.number_system_indicator}")
+                carry_nomber = 1
+            else:
+                result += self.alfabet[a - carry_nomber - b]
+                print(f"вычитаем из {a - carry_nomber} {b}, пишем {a - carry_nomber - b}")
+                carry_nomber = 0
+        result = result[::-1]
+        while (i != self.len_of_every_number) and (result[i] == "0"):
+            i += 1
+        if i == self.len_of_every_number:
+            result = 0
+            return 0
+        result = result[i:]
+        return result
+a = input()
+b = input()
+c = int(input())
+a = int_n_system_calculation(a, c)
+b = int_n_system_calculation(b, c)
+print("ответ:", a - b)

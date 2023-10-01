@@ -66,14 +66,17 @@ class int_n_system_calculation():
 
     def __add__(self, other):
         
+        # We process the received data
         list_of_integers = N_numbers_to_equal_length(self, [other])
+        # Declare the resulting numbers
         first_of_integers = list_of_integers[0]
         second_of_integers = list_of_integers[1]
+        # We denote the length of the number
         self.len_of_every_number = len(first_of_integers)
 
-        #create an empty string (in the future - the result of addition) and carry number
+        # Create an empty string (in the future - the result of addition) and carry number
         result = ""
-        carry_nomber = 0
+        Number_transfer_from_upcoming_place = 0
 
         # Let's go cyclically through each digit of the given numbers in order to organize bitwise addition
         for i in range(self.len_of_every_number - 1, -1, -1):
@@ -86,12 +89,13 @@ class int_n_system_calculation():
             # a decimal number is obtained, which is the lowest digit of the sum of the total digit of the original numbers. 
             # When adding a carry number, we add the highest digit of the previous sum to the resulting value,
             # thus obtaining the final value in the same digit for the result of the entire calculation.
-            result += self.alfabet[(a + b + carry_nomber)%self.number_system_indicator]
-            carry_nomber = (a + b + carry_nomber)//self.number_system_indicator
+            result += self.alfabet[(a + b + Number_transfer_from_upcoming_place)%self.number_system_indicator]
+            Number_transfer_from_upcoming_place = (a + b + Number_transfer_from_upcoming_place)//self.number_system_indicator
 
-        if carry_nomber != 0:
-            result += self.alfabet[carry_nomber]
+        if Number_transfer_from_upcoming_place != 0:
+            result += self.alfabet[Number_transfer_from_upcoming_place]
 
+        # Since we wrote the number from right to left, we reverse the list
         result = result[::-1]
         return result
     
@@ -99,36 +103,48 @@ class int_n_system_calculation():
 
     def __sub__(self, other):
 
+        # We process the received data
         list_of_integers = N_numbers_to_equal_length(self, [other])
+        # Declare the resulting numbers
         first_of_integers = list_of_integers[0]
         second_of_integers = list_of_integers[1]
+        # We denote the length of the number
         self.len_of_every_number = len(first_of_integers)
-
+        # Create an empty string (in the future - the result of addition) and carry number
         result = ""
-        carry_nomber = 0
+        Number_transfer_from_upcoming_place = 0
         
+        # Let's go cyclically through each digit of the given numbers to organize bitwise subtraction.
         for i in range(self.len_of_every_number - 1, -1, -1):
 
+            # Let's understand what number in the decimal system is hidden behind these digits
             a = self.alfabet.index(first_of_integers.number[i])
             b = other.alfabet.index(second_of_integers.number[i])
 
-            if a - carry_nomber == -1:
-                result += self.alfabet[a - carry_nomber - b + self.number_system_indicator]
-                carry_nomber = 1
-                continue
-            
-            if a - carry_nomber < b:
-                result += self.alfabet[a - carry_nomber - b + self.number_system_indicator]
-                carry_nomber = 1
+            # When performing bitwise subtraction, exactly two situations arise.
+            # If the number being reduced is less than the sum of the subtracted and the addend from the previous digit,
+            # Then we add to the current minuend a number equal to the base of the number system.
+            if a < b + Number_transfer_from_upcoming_place:
+                result += self.alfabet[a - Number_transfer_from_upcoming_place - b + self.number_system_indicator]
+                # And we write down in the the number of transfer from the upcoming plece that there was a transfer.
+                Number_transfer_from_upcoming_place = 1
             else:
-                result += self.alfabet[a - carry_nomber - b]
-                carry_nomber = 0
+                # Otherwise, we simply subtract
+                result += self.alfabet[a - Number_transfer_from_upcoming_place - b]
+                Number_transfer_from_upcoming_place = 0
+
+        # Since we wrote the number from right to left, we reverse the list
         result = result[::-1]
+        
+        # In the case of difference, a case arises when both numbers become equal to 0. 
+        # Because of which the entire result will be a list of zeros. 
+        # That's why I'm introducing a few crutches to correct errors.
         while (i != self.len_of_every_number) and (result[i] == "0"):
             i += 1
         if i == self.len_of_every_number:
             result = 0
             return 0
+        
         result = result[i:]
         return result
 a = "3555543510"

@@ -57,12 +57,68 @@ class int_n_system_calculation():
         self.alfabet = self.alfabet_start[:self.number_system_indicator]
 
 
-
     def __len__(self):
         #Magic function to simplify code
         return len(self.number)
-    
+       
 
+    def __eq__ (self, other): # number_system_eq : bool = True
+        # We process the received data
+        list_of_integers = N_numbers_to_equal_length(self, [other])
+        # Declare the resulting numbers
+        first_of_integers = list_of_integers[0]
+        second_of_integers = list_of_integers[1]
+
+        if (first_of_integers.number == second_of_integers.number) and (first_of_integers.number_system_indicator == second_of_integers.number_system_indicator):
+            return True
+        else:
+            return False
+
+
+    def __lt__ (self, other): # number_system_eq : bool = True
+        # We process the received data
+        list_of_integers = N_numbers_to_equal_length(self, [other])
+        # Declare the resulting numbers
+        first_of_integers = list_of_integers[0]
+        second_of_integers = list_of_integers[1]
+
+        for digit in range(len(first_of_integers)):
+            a = self.alfabet.index(first_of_integers.number[digit])
+            b = self.alfabet.index(second_of_integers.number[digit])
+
+            if a < b:
+                continue
+            return False
+        return True
+
+
+    def __ne__ (self, other): # number_system_eq : bool = True
+        if self == other:
+            return False
+        else:
+            return True
+        
+
+    def __gt__ (self, other): # number_system_eq : bool = True
+        if (self != other) and (not(self<other)):
+            return True
+        else:
+            return False
+        
+    
+    def __le__ (self, other): # number_system_eq : bool = True
+        if self < other or self == other:
+            return True
+        else:
+            return False
+        
+
+    def __ge__ (self, other): # number_system_eq : bool = True
+        if self > other or self == other:
+            return True
+        else:
+            return False
+        
 
     def __add__(self, other):
         
@@ -98,72 +154,7 @@ class int_n_system_calculation():
         # Since we wrote the number from right to left, we reverse the list
         result = result[::-1]
         return int_n_system_calculation(result, self.number_system_indicator)
-    
 
-
-    def __eq__ (self, other): # number_system_eq : bool = True
-        # We process the received data
-        list_of_integers = N_numbers_to_equal_length(self, [other])
-        # Declare the resulting numbers
-        first_of_integers = list_of_integers[0]
-        second_of_integers = list_of_integers[1]
-
-        if (first_of_integers.number == second_of_integers.number) and (first_of_integers.number_system_indicator == second_of_integers.number_system_indicator):
-            return True
-        else:
-            return False
-
-
-
-    def __lt__ (self, other): # number_system_eq : bool = True
-        # We process the received data
-        list_of_integers = N_numbers_to_equal_length(self, [other])
-        # Declare the resulting numbers
-        first_of_integers = list_of_integers[0]
-        second_of_integers = list_of_integers[1]
-
-        for digit in range(len(first_of_integers)):
-            a = self.alfabet.index(first_of_integers.number[digit])
-            b = self.alfabet.index(second_of_integers.number[digit])
-
-            if a < b:
-                continue
-            return False
-        return True
-
-
-
-    def __ne__ (self, other): # number_system_eq : bool = True
-        if self == other:
-            return False
-        else:
-            return True
-        
-
-
-    def __gt__ (self, other): # number_system_eq : bool = True
-        if (self != other) and (not(self<other)):
-            return True
-        else:
-            return False
-        
-
-    
-    def __le__ (self, other): # number_system_eq : bool = True
-        if self < other or self == other:
-            return True
-        else:
-            return False
-        
-    
-
-    def __ge__ (self, other): # number_system_eq : bool = True
-        if self > other or self == other:
-            return True
-        else:
-            return False
-
-        
 
     def __sub__(self, other):
 
@@ -204,7 +195,7 @@ class int_n_system_calculation():
         # Because of which the entire result will be a list of zeros. 
         # That's why I'm introducing a few crutches to correct errors.
         
-        if int_n_system_calculation(result, self.number_system_indicator) == int_n_system_calculation(0, self.number_system_indicator):
+        if int_n_system_calculation(result, self.number_system_indicator) == int_n_system_calculation("0", self.number_system_indicator):
             return int_n_system_calculation("0", self.number_system_indicator)
         while result[i] == "0":
             i += 1

@@ -130,7 +130,7 @@ class int_n_system_calculation():
         # We denote the length of the number
         self.len_of_every_number = len(first_of_integers)
 
-        # Create an empty string (in the future - the result of addition) and carry number
+        # Create an empty string (in the future - the result of addition) and Transfer number from the upcoming category
         result = ""
         Number_transfer_from_upcoming_place = 0
 
@@ -143,7 +143,7 @@ class int_n_system_calculation():
 
             # When summing such two decimal numbers and taking the remainder of the resulting number,
             # a decimal number is obtained, which is the lowest digit of the sum of the total digit of the original numbers. 
-            # When adding a carry number, we add the highest digit of the previous sum to the resulting value,
+            # When adding a Transfer number from the upcoming category, (we add the highest digit of the previous sum to the resulting value),
             # thus obtaining the final value in the same digit for the result of the entire calculation.
             result += self.alfabet[(a + b + Number_transfer_from_upcoming_place)%self.number_system_indicator]
             Number_transfer_from_upcoming_place = (a + b + Number_transfer_from_upcoming_place)//self.number_system_indicator
@@ -165,7 +165,7 @@ class int_n_system_calculation():
         second_of_integers = list_of_integers[1]
         # We denote the length of the number
         self.len_of_every_number = len(first_of_integers)
-        # Create an empty string (in the future - the result of addition) and carry number
+        # Create an empty string (in the future - the result of addition) and Transfer number from the upcoming category
         result = ""
         Number_transfer_from_upcoming_place = 0
         
@@ -202,6 +202,36 @@ class int_n_system_calculation():
         result = result[i:]
         return int_n_system_calculation(result, self.number_system_indicator)
 
+
+    def sum_of_list_n_system_calculation(self, other : list):
+        
+        list_of_integers = N_numbers_to_equal_length(self, other)
+        # Declare the resulting numbers
+        first_of_integers = list_of_integers[0]
+        second_of_integers = list_of_integers[1]
+        # We denote the length of the number
+        self.len_of_every_number = len(first_of_integers)
+        # Create an empty string (in the future - the result of addition) and Transfer number from the upcoming category
+        result = ""
+        Number_transfer_from_upcoming_place = 0
+        const_len = len(list_of_integers[0]) - 1
+
+        # Let's go cyclically through each digit of the given numbers in order to organize bitwise addition
+        digit = const_len
+        while Number_transfer_from_upcoming_place != 0 or digit >= 0:
+
+            sum_n = Number_transfer_from_upcoming_place
+
+            if digit >= 0:
+                for i in range(const_len):
+                    sum_n += self.alfabet.index(list_of_integers[i].number[digit])
+
+            result += self.alfabet[sum_n % self.number_system_indicator]
+            Number_transfer_from_upcoming_place = sum_n // self.number_system_indicator
+        
+        # Since we wrote the number from right to left, we reverse the list
+        result = result[::-1]
+        return int_n_system_calculation(result, self.number_system_indicator)
 
 
 a = "0"

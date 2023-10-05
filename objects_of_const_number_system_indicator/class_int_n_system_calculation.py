@@ -44,7 +44,7 @@ class int_n_system_calculation():
     
     # boundary of application of the class - positional number system with the last digit z
     # The general alphabet for any valid number system looks like this:
-    alfabet_start= "0123456789abcdefghijklmnopqrstuvwxyz"
+    alfabet= "0123456789abcdefghijklmnopqrstuvwxyz"
     
 
 
@@ -54,13 +54,16 @@ class int_n_system_calculation():
         # number system indicator
         self.number_system_indicator = n
         # Let's limit the existing alphabet
-        self.alfabet = self.alfabet_start[:self.number_system_indicator]
+        
+        self.dictionary = {}
+        for i in range(self.number_system_indicator):
+            self.dictionary[self.alfabet[i]] = i
 
 
     def __len__(self):
         #Magic function to simplify code
         return len(self.number)
-       
+    
 
     def __eq__ (self, other): # number_system_eq : bool = True
         # We process the received data
@@ -132,24 +135,24 @@ class int_n_system_calculation():
 
         # Create an empty string (in the future - the result of addition) and Transfer number from the upcoming category
         result = ""
-        Number_transfer_from_upcoming_place = 0
+        number_transfer_from_upcoming_place = 0
 
         # Let's go cyclically through each digit of the given numbers in order to organize bitwise addition
         for i in range(self.len_of_every_number - 1, -1, -1):
 
             # Let's understand what number in the decimal system is hidden behind these digits
-            a = self.alfabet.index(first_of_integers.number[i])
-            b = other.alfabet.index(second_of_integers.number[i])
+            a = self.dictionary[first_of_integers.number[i]]
+            b = other.dictionary[second_of_integers.number[i]]
 
             # When summing such two decimal numbers and taking the remainder of the resulting number,
             # a decimal number is obtained, which is the lowest digit of the sum of the total digit of the original numbers. 
             # When adding a Transfer number from the upcoming category, (we add the highest digit of the previous sum to the resulting value),
             # thus obtaining the final value in the same digit for the result of the entire calculation.
-            result += self.alfabet[(a + b + Number_transfer_from_upcoming_place)%self.number_system_indicator]
-            Number_transfer_from_upcoming_place = (a + b + Number_transfer_from_upcoming_place)//self.number_system_indicator
+            result += self.alfabet[(a + b + number_transfer_from_upcoming_place)%self.number_system_indicator]
+            number_transfer_from_upcoming_place = (a + b + number_transfer_from_upcoming_place)//self.number_system_indicator
 
-        if Number_transfer_from_upcoming_place != 0:
-            result += self.alfabet[Number_transfer_from_upcoming_place]
+        if number_transfer_from_upcoming_place != 0:
+            result += self.alfabet[number_transfer_from_upcoming_place]
 
         # Since we wrote the number from right to left, we reverse the list
         result = result[::-1]
@@ -167,26 +170,26 @@ class int_n_system_calculation():
         self.len_of_every_number = len(first_of_integers)
         # Create an empty string (in the future - the result of addition) and Transfer number from the upcoming category
         result = ""
-        Number_transfer_from_upcoming_place = 0
+        number_transfer_from_upcoming_place = 0
         
         # Let's go cyclically through each digit of the given numbers to organize bitwise subtraction.
         for i in range(self.len_of_every_number - 1, -1, -1):
 
             # Let's understand what number in the decimal system is hidden behind these digits
-            a = self.alfabet.index(first_of_integers.number[i])
-            b = other.alfabet.index(second_of_integers.number[i])
+            a = self.dictionary[first_of_integers.number[i]]
+            b = other.dictionary[second_of_integers.number[i]]
 
             # When performing bitwise subtraction, exactly two situations arise.
             # If the number being reduced is less than the sum of the subtracted and the addend from the previous digit,
             # Then we add to the current minuend a number equal to the base of the number system.
-            if a < b + Number_transfer_from_upcoming_place:
-                result += self.alfabet[a - Number_transfer_from_upcoming_place - b + self.number_system_indicator]
+            if a < b + number_transfer_from_upcoming_place:
+                result += self.alfabet[a - number_transfer_from_upcoming_place - b + self.number_system_indicator]
                 # And we write down in the the number of transfer from the upcoming plece that there was a transfer.
-                Number_transfer_from_upcoming_place = 1
+                number_transfer_from_upcoming_place = 1
             else:
                 # Otherwise, we simply subtract
-                result += self.alfabet[a - Number_transfer_from_upcoming_place - b]
-                Number_transfer_from_upcoming_place = 0
+                result += self.alfabet[a - number_transfer_from_upcoming_place - b]
+                number_transfer_from_upcoming_place = 0
 
         # Since we wrote the number from right to left, we reverse the list
         result = result[::-1]
@@ -206,37 +209,32 @@ class int_n_system_calculation():
     def sum_of_list_n_system_calculation(self, other : list):
         
         list_of_integers = N_numbers_to_equal_length(self, other)
-        # Declare the resulting numbers
-        first_of_integers = list_of_integers[0]
-        second_of_integers = list_of_integers[1]
         # We denote the length of the number
-        self.len_of_every_number = len(first_of_integers)
+        self.len_of_every_number = len(list_of_integers[0]) - 1
         # Create an empty string (in the future - the result of addition) and Transfer number from the upcoming category
         result = ""
-        Number_transfer_from_upcoming_place = 0
-        const_len = len(list_of_integers[0]) - 1
+        number_transfer_from_upcoming_place = 0
 
         # Let's go cyclically through each digit of the given numbers in order to organize bitwise addition
-        digit = const_len
-        while Number_transfer_from_upcoming_place != 0 or digit >= 0:
+        digit = self.len_of_every_number
+        while number_transfer_from_upcoming_place != 0 or digit >= 0:
 
-            sum_n = Number_transfer_from_upcoming_place
+            sum_n = number_transfer_from_upcoming_place
 
             if digit >= 0:
-                for i in range(const_len):
-                    sum_n += self.alfabet.index(list_of_integers[i].number[digit])
+                for i in range(len(list_of_integers)):
+                    sum_n += self.dictionary[list_of_integers[i].number[digit]]
 
             result += self.alfabet[sum_n % self.number_system_indicator]
-            Number_transfer_from_upcoming_place = sum_n // self.number_system_indicator
+            number_transfer_from_upcoming_place = sum_n // self.number_system_indicator
+
+            digit -= 1
         
         # Since we wrote the number from right to left, we reverse the list
         result = result[::-1]
         return int_n_system_calculation(result, self.number_system_indicator)
 
-
-a = "0"
-b = "1"
-c = 10
-a = int_n_system_calculation(a, c)
-b = int_n_system_calculation(b, c)
-print(a - b)
+a = int_n_system_calculation("hjkrfkerugklwerutgklwerutilu", 33)
+arr = [a]*7122222
+c = a.sum_of_list_n_system_calculation(arr)
+print(c.number)

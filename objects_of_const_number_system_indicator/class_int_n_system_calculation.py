@@ -60,6 +60,11 @@ class int_n_system_calculation():
             self.dictionary[self.alfabet[i]] = i
 
 
+    def copy(self):
+        number_copy = self.number
+        number_system_indication = self.number_system_indicator
+        return int_n_system_calculation(number_copy, number_system_indication)
+
     def __len__(self):
         #Magic function to simplify code
         return len(self.number)
@@ -67,7 +72,7 @@ class int_n_system_calculation():
 
     def __eq__ (self, other): # number_system_eq : bool = True
         # We process the received data
-        list_of_integers = N_numbers_to_equal_length(self, [other])
+        list_of_integers = N_numbers_to_equal_length(self, other)
         # Declare the resulting numbers
         first_of_integers = list_of_integers[0]
         second_of_integers = list_of_integers[1]
@@ -235,6 +240,3 @@ class int_n_system_calculation():
         return int_n_system_calculation(result, self.number_system_indicator)
 
 a = int_n_system_calculation("hjkrfkerugklwerutgklwerutilu", 33)
-arr = [a]*7122222
-c = a.sum_of_list_n_system_calculation(arr)
-print(c.number)

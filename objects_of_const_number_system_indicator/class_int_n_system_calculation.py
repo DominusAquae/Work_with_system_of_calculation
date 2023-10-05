@@ -71,8 +71,10 @@ class int_n_system_calculation():
     
 
     def __eq__ (self, other): # number_system_eq : bool = True
+        first_of_integers = self.copy()
+        second_of_integers = other.copy()
         # We process the received data
-        list_of_integers = N_numbers_to_equal_length(self, other)
+        list_of_integers = N_numbers_to_equal_length(first_of_integers, [second_of_integers])
         # Declare the resulting numbers
         first_of_integers = list_of_integers[0]
         second_of_integers = list_of_integers[1]
@@ -84,8 +86,10 @@ class int_n_system_calculation():
 
 
     def __lt__ (self, other): # number_system_eq : bool = True
+        first_of_integers = self.copy()
+        second_of_integers = other.copy()
         # We process the received data
-        list_of_integers = N_numbers_to_equal_length(self, [other])
+        list_of_integers = N_numbers_to_equal_length(first_of_integers, [second_of_integers])
         # Declare the resulting numbers
         first_of_integers = list_of_integers[0]
         second_of_integers = list_of_integers[1]
@@ -239,4 +243,25 @@ class int_n_system_calculation():
         result = result[::-1]
         return int_n_system_calculation(result, self.number_system_indicator)
 
-a = int_n_system_calculation("hjkrfkerugklwerutgklwerutilu", 33)
+
+    def __mul__(self, other): 
+        list_for_summ = []
+        if self < other:
+            self, other = other, self
+        #self > other = True
+        for digit_of_smallest_number in range(len(other) - 1, -1, -1):
+            # Create an empty string (in the future - the result of addition) and Transfer number from the upcoming category
+            result = ""
+            number_transfer_from_upcoming_place = 0
+            dig_smallest_number = other.dictionary[other.number[digit_of_smallest_number]]
+            for digit_of_biggest_number in range(len(self) - 1, -1, -1):
+                product_of_numbers = self.dictionary[self.number[digit_of_biggest_number]] * dig_smallest_number + number_transfer_from_upcoming_place
+                result += self.alfabet[product_of_numbers%self.number_system_indicator]
+                number_transfer_from_upcoming_place = product_of_numbers // self.number_system_indicator
+            if number_transfer_from_upcoming_place != 0:
+                result += self.alfabet[number_transfer_from_upcoming_place]
+            result = result[::-1]
+            result += "0"*(len(other) - 1 - digit_of_smallest_number)
+            list_for_summ.append(int_n_system_calculation(result, self.number_system_indicator))
+        _0 = int_n_system_calculation("0", self.number_system_indicator)
+        return _0.sum_of_list_n_system_calculation(list_for_summ)

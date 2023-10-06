@@ -268,9 +268,11 @@ class int_n_system_calculation():
             list_for_summ.append(int_n_system_calculation(result, self.number_system_indicator))
         _0 = int_n_system_calculation("0", self.number_system_indicator)
         return _0.sum_of_list_n_system_calculation(list_for_summ)
-a = input()
-b = input()
-n = int(input())
-a = int_n_system_calculation(a, n)
-b = int_n_system_calculation(b, n)
-print(f"ответ: {(a*b).number}")
+            
+if __name__ == "__main__":
+        a = input()
+        b = input()
+        n = int(input())
+        a = int_n_system_calculation(a, n)
+        b = int_n_system_calculation(b, n)
+        print(f"ответ: {(a*b).number}")

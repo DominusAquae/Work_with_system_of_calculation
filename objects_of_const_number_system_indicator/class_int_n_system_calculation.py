@@ -44,7 +44,7 @@ class int_n_system_calculation():
     
     # boundary of application of the class - positional number system with the last digit z
     # The general alphabet for any valid number system looks like this:
-    alfabet= "0123456789abcdefghijklmnopqrstuvwxyz"
+    alphabet= "0123456789abcdefghijklmnopqrstuvwxyz"
     
 
 
@@ -53,11 +53,11 @@ class int_n_system_calculation():
         self.number = a
         # number system indicator
         self.number_system_indicator = n
-        # Let's limit the existing alphabet
-        
+
+        # Let's limit the existing alphabet and let's do it more fast
         self.dictionary = {}
         for i in range(self.number_system_indicator):
-            self.dictionary[self.alfabet[i]] = i
+            self.dictionary[self.alphabet[i]] = i
 
 
     def copy(self):
@@ -70,7 +70,7 @@ class int_n_system_calculation():
         return len(self.number)
     
 
-    def __eq__ (self, other): # number_system_eq : bool = True
+    def __eq__ (self, other): # self == other
         first_of_integers = self.copy()
         second_of_integers = other.copy()
         # We process the received data
@@ -85,7 +85,7 @@ class int_n_system_calculation():
             return False
 
 
-    def __lt__ (self, other): # number_system_eq : bool = True
+    def __lt__ (self, other): # self < other
         first_of_integers = self.copy()
         second_of_integers = other.copy()
         # We process the received data
@@ -95,38 +95,35 @@ class int_n_system_calculation():
         second_of_integers = list_of_integers[0]
 
         for digit in range(len(first_of_integers)):
-            a = self.alfabet.index(first_of_integers.number[digit])
-            b = self.alfabet.index(second_of_integers.number[digit])
-
-            if a < b:
+            if self.dictionary[first_of_integers.number[digit]] < self.dictionary[second_of_integers.number[digit]]:
                 continue
             return False
         return True
 
 
-    def __ne__ (self, other): # number_system_eq : bool = True
+    def __ne__ (self, other): # self != other
         if self == other:
             return False
         else:
             return True
         
 
-    def __gt__ (self, other): # number_system_eq : bool = True
-        if (self != other) and (not(self<other)):
+    def __gt__ (self, other): # self > other
+        if (not(self == other)) and (not(self < other)):
             return True
         else:
             return False
         
     
-    def __le__ (self, other): # number_system_eq : bool = True
-        if self < other or self == other:
+    def __le__ (self, other): # self <= other
+        if (self < other) or (self == other):
             return True
         else:
             return False
         
 
-    def __ge__ (self, other): # number_system_eq : bool = True
-        if self > other or self == other:
+    def __ge__ (self, other): #self >= other
+        if not(self < other):
             return True
         else:
             return False
@@ -157,11 +154,14 @@ class int_n_system_calculation():
             # a decimal number is obtained, which is the lowest digit of the sum of the total digit of the original numbers. 
             # When adding a Transfer number from the upcoming category, (we add the highest digit of the previous sum to the resulting value),
             # thus obtaining the final value in the same digit for the result of the entire calculation.
-            result += self.alfabet[(a + b + number_transfer_from_upcoming_place)%self.number_system_indicator]
-            number_transfer_from_upcoming_place = (a + b + number_transfer_from_upcoming_place)//self.number_system_indicator
+            number_help = a + b + number_transfer_from_upcoming_place
+            result += self.alphabet[(number_help)%self.number_system_indicator]
+            number_transfer_from_upcoming_place = (number_help)//self.number_system_indicator
 
         if number_transfer_from_upcoming_place != 0:
-            result += self.alfabet[number_transfer_from_upcoming_place]
+            result += self.alphabet[number_transfer_from_upcoming_place]
+            # it may be:
+            # result += "1"
 
         # Since we wrote the number from right to left, we reverse the list
         result = result[::-1]
@@ -192,12 +192,12 @@ class int_n_system_calculation():
             # If the number being reduced is less than the sum of the subtracted and the addend from the previous digit,
             # Then we add to the current minuend a number equal to the base of the number system.
             if a < b + number_transfer_from_upcoming_place:
-                result += self.alfabet[a - number_transfer_from_upcoming_place - b + self.number_system_indicator]
+                result += self.alphabet[a - number_transfer_from_upcoming_place - b + self.number_system_indicator]
                 # And we write down in the the number of transfer from the upcoming plece that there was a transfer.
                 number_transfer_from_upcoming_place = 1
             else:
                 # Otherwise, we simply subtract
-                result += self.alfabet[a - number_transfer_from_upcoming_place - b]
+                result += self.alphabet[a - number_transfer_from_upcoming_place - b]
                 number_transfer_from_upcoming_place = 0
 
         # Since we wrote the number from right to left, we reverse the list
@@ -207,7 +207,7 @@ class int_n_system_calculation():
         # Because of which the entire result will be a list of zeros. 
         # That's why I'm introducing a few crutches to correct errors.
         
-        if int_n_system_calculation(result, self.number_system_indicator) == int_n_system_calculation("0", self.number_system_indicator):
+        if self.number_system_indicator == "0".rjust(len(self.number), "0"):
             return int_n_system_calculation("0", self.number_system_indicator)
         while result[i] == "0":
             i += 1
@@ -234,38 +234,41 @@ class int_n_system_calculation():
                 for i in range(len(list_of_integers)):
                     sum_n += self.dictionary[list_of_integers[i].number[digit]]
 
-            modding = sum_n % self.number_system_indicator
-            result += self.alfabet[modding]
-            divving = sum_n // self.number_system_indicator
-            number_transfer_from_upcoming_place = divving
+            result += self.alphabet[sum_n % self.number_system_indicator]
+            number_transfer_from_upcoming_place = sum_n // self.number_system_indicator
 
             digit -= 1
         
         # Since we wrote the number from right to left, we reverse the list
         result = result[::-1]
-        print()
         return int_n_system_calculation(result, self.number_system_indicator)
 
 
-    def __mul__(self, other): 
+    def __mul__(self, other):
+        
         list_for_summ = []
         if self < other:
             self, other = other, self
         #self > other = True
+        
         for digit_of_smallest_number in range(len(other) - 1, -1, -1):
             # Create an empty string (in the future - the result of addition) and Transfer number from the upcoming category
             result = ""
             number_transfer_from_upcoming_place = 0
             dig_smallest_number = other.dictionary[other.number[digit_of_smallest_number]]
+            
             for digit_of_biggest_number in range(len(self) - 1, -1, -1):
                 product_of_numbers = self.dictionary[self.number[digit_of_biggest_number]] * dig_smallest_number + number_transfer_from_upcoming_place
-                result += self.alfabet[product_of_numbers%self.number_system_indicator]
+                result += self.alphabet[product_of_numbers%self.number_system_indicator]
                 number_transfer_from_upcoming_place = product_of_numbers // self.number_system_indicator
+            
             if number_transfer_from_upcoming_place != 0:
-                result += self.alfabet[number_transfer_from_upcoming_place]
+                result += self.alphabet[number_transfer_from_upcoming_place]
+            
             result = result[::-1]
             result += "0"*(len(other) - 1 - digit_of_smallest_number)
             list_for_summ.append(int_n_system_calculation(result, self.number_system_indicator))
+        
         _0 = int_n_system_calculation("0", self.number_system_indicator)
         return _0.sum_of_list_n_system_calculation(list_for_summ)
             
@@ -273,6 +276,6 @@ if __name__ == "__main__":
         a = input()
         b = input()
         n = int(input())
-        a = int_n_system_calculation(a, n)
-        b = int_n_system_calculation(b, n)
-        print(f"ответ: {(a*b).number}")
+        alfa = int_n_system_calculation(a, n)
+        beta = int_n_system_calculation(b, n)
+        print(f"ответ: {(alfa*beta).number}")

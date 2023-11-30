@@ -71,6 +71,10 @@ class int_n_system_calculation():
         return len(self.number)
     
 
+    def __str__(self):
+        return self.number
+
+
     def __eq__ (self, other): # self == other
         first_of_integers = self.copy()
         second_of_integers = other.copy()
@@ -215,7 +219,7 @@ class int_n_system_calculation():
         # Because of which the entire result will be a list of zeros. 
         # That's why I'm introducing a few crutches to correct errors.
         
-        if self.number_system_indicator == "0".rjust(len(self.number), "0"):
+        if self.number == "0".rjust(len(self.number), "0"):
             return int_n_system_calculation("0", self.number_system_indicator)
         while result[i] == "0":
             i += 1
@@ -256,4 +260,4 @@ if __name__ == "__main__":
         n = int(input())
         alfa = int_n_system_calculation(a, n)
         beta = int_n_system_calculation(b, n)
-        print(f"ответ: {(beta - alfa).number}")
+        print(f"ответ: {(beta - alfa)}")

@@ -32,3 +32,23 @@ class List_int_n_system_calculation():
         else:
             print("Error: number of system indicator can't be defined")
             exit(0)
+
+    def add_1 (self):
+        ln = len(self.number)
+        number_of_1 = [0 for _ in range(ln-1)]
+        number_of_1.append(1)
+        result = []
+        number_transfer_from_upcoming_place = 0
+        for digit in range(ln-1, -1, -1):
+            digit_of_1 = number_of_1[digit]
+            digit_of_number = self.number[digit]
+            
+            interim_amount = digit_of_1 + digit_of_number + number_transfer_from_upcoming_place
+            result.append(self.dictionary[interim_amount%self.number_system_indicator])
+            number_transfer_from_upcoming_place = interim_amount // self.number_system_indicator
+
+        if number_transfer_from_upcoming_place != 0:
+            result.append(1)
+
+        result = result[::-1]
+        self.number = result

@@ -24,6 +24,8 @@ class List_int_n_system_calculation():
             for i in range(self.number_system_indicator):
                 self.dictionary[alphabet_input[i]] = i
                 self.rev_dictionary[i] = alphabet_input[i]
+            for i in range(len(self.number)):
+                self.number[i] = self.dictionary[self.number[i]]
         elif n != 0:
             self.number_system_indicator = n
             # Let's create alphabet_input, because we can
@@ -32,6 +34,7 @@ class List_int_n_system_calculation():
         else:
             print("Error: number of system indicator can't be defined")
             exit(0)
+
 
     def add_1 (self):
         ln = len(self.number)
@@ -44,7 +47,7 @@ class List_int_n_system_calculation():
             digit_of_number = self.number[digit]
             
             interim_amount = digit_of_1 + digit_of_number + number_transfer_from_upcoming_place
-            result.append(self.dictionary[interim_amount%self.number_system_indicator])
+            result.append(interim_amount%self.number_system_indicator)
             number_transfer_from_upcoming_place = interim_amount // self.number_system_indicator
 
         if number_transfer_from_upcoming_place != 0:

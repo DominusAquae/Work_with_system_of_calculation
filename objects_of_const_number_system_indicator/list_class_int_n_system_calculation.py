@@ -1,5 +1,5 @@
 class List_int_n_system_calculation():
-    def __init__(self, number_input, alphabet_input : list =[], number_system_indicator_input : int =0, dictionary_input : dict = {}, rev_dictironary_input : dict = {}, flag_ready_number : dict = False):
+    def __init__ (self, number_input, alphabet_input : list =[], number_system_indicator_input : int =0, dictionary_input : dict = {}, rev_dictironary_input : dict = {}, flag_ready_number : dict = False):
         # list number_input representation of a number by digit:
         self.number = number_input
         self.alphabet = alphabet_input
@@ -102,7 +102,7 @@ class List_int_n_system_calculation():
         self.number = result
     
     
-    def copy(self, new_number_input :list = []):
+    def copy (self, new_number_input :list = []):
         if new_number_input == []:
             other = List_int_n_system_calculation(
                 number_input = self.number, 
@@ -135,7 +135,7 @@ class List_int_n_system_calculation():
         return real_str_form[1:]
 
 
-    def __len__(self):
+    def __len__ (self):
         return len(self.number)
 
     
@@ -144,3 +144,81 @@ class List_int_n_system_calculation():
         b = len(other)
         max_length = max(a, b)
         return self.copy([0]*(max_length - a) + self.number), other.copy([0]*(max_length - b) + other.number)
+
+    
+    # The comparison functions work only for numbers with equal number system indicator
+    # Errors I didn't wrote, becouse in the future is possible to implement this function
+
+    def __eq__ (self, other): # self == other
+        # self.number_system_indicator = other.number_system_indicator
+        self, other = self._two_of_numbers_to_equal_length(other)
+        if self.number == other.number:
+            return True
+        else:
+            return False
+
+    
+    def __ne__ (self, other): # self != other
+        self, other = self._two_of_numbers_to_equal_length(other)
+        if self.number != other.number:
+            return True
+        else:
+            return False
+        
+
+    def __lt__ (self, other): # self < other
+        self, other = self._two_of_numbers_to_equal_length(other)
+         
+        if self.number == other.number:
+            return False
+        else:
+            digit = len(self)
+            while digit > 0:
+                if self.number[digit - 1] > other.number[digit - 1]:
+                    return False
+                digit -= 1
+            return True
+
+    
+    def __gt__ (self, other): # self > other
+        self, other = self._two_of_numbers_to_equal_length(other)
+
+        if self.number == other.number:
+            return False
+        else:
+            digit = 0
+            ln = len(self.number)
+            while digit < ln:
+                if self.number[digit] < other.number[digit]:
+                    return False
+                digit += 1
+            return True
+
+    
+    def __le__ (self, other): # self <= other
+        self, other = self._two_of_numbers_to_equal_length(other)
+         
+        if self.number == other.number:
+            return True
+        else:
+            digit = len(self)
+            while digit > 0:
+                if self.number[digit - 1] >= other.number[digit - 1]:
+                    return False
+                digit -= 1
+            return True
+
+    
+    def __ge__ (self, other): # self >= other
+        self, other = self._two_of_numbers_to_equal_length(other)
+
+        if self.number == other.number:
+            return False
+        else:
+            digit = 0
+            ln = len(self.number)
+            while digit < ln:
+                if self.number[digit] <= other.number[digit]:
+                    return False
+                digit += 1
+            return True

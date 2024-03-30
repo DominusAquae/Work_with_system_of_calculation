@@ -102,7 +102,7 @@ class List_int_n_system_calculation():
         self.number = result
     
     
-    def copy (self, new_number_input :list = []):
+    def copy (self, new_number_input :list = [], flag_ready_number_input = False):
         if new_number_input == []:
             other = List_int_n_system_calculation(
                 number_input = self.number, 
@@ -118,7 +118,7 @@ class List_int_n_system_calculation():
                 number_system_indicator_input = self.number_system_indicator, 
                 dictionary_input = self.dictionary, 
                 rev_dictironary_input = self.rev_dictionary, 
-                flag_ready_number = False)
+                flag_ready_number = flag_ready_number_input)
 
         return other
 
@@ -130,7 +130,7 @@ class List_int_n_system_calculation():
 
         real_str_form = ""
         for i in real_form:
-            real_str_form += "_"
+            real_str_form += " "
             real_str_form += str(i)
         return real_str_form[1:]
 
@@ -143,7 +143,7 @@ class List_int_n_system_calculation():
         a = len(self)
         b = len(other)
         max_length = max(a, b)
-        return self.copy([0]*(max_length - a) + self.number), other.copy([0]*(max_length - b) + other.number)
+        return self.copy([0]*(max_length - a) + self.number, True), other.copy([0]*(max_length - b) + other.number, True)
 
     
     # The comparison functions work only for numbers with equal number system indicator
@@ -191,8 +191,9 @@ class List_int_n_system_calculation():
             while digit < ln:
                 if self.number[digit] < other.number[digit]:
                     return False
+                elif self.number[digit] > other.number[digit]:
+                    return True
                 digit += 1
-            return True
 
     
     def __le__ (self, other): # self <= other
@@ -203,7 +204,7 @@ class List_int_n_system_calculation():
         else:
             digit = len(self)
             while digit > 0:
-                if self.number[digit - 1] >= other.number[digit - 1]:
+                if self.number[digit - 1] > other.number[digit - 1]:
                     return False
                 digit -= 1
             return True
@@ -213,12 +214,15 @@ class List_int_n_system_calculation():
         self, other = self._two_of_numbers_to_equal_length(other)
 
         if self.number == other.number:
-            return False
+            return True
         else:
             digit = 0
             ln = len(self.number)
             while digit < ln:
-                if self.number[digit] <= other.number[digit]:
+                if self.number[digit] < other.number[digit]:
                     return False
+                if self.number[digit] < other.number[digit]:
+                    return False
+                elif self.number[digit] > other.number[digit]:
+                    return True
                 digit += 1
-            return True

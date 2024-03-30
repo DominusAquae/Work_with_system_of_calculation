@@ -101,6 +101,7 @@ class List_int_n_system_calculation():
         result = result[::-1]
         self.number = result
     
+    
     def copy(self, new_number_input :list = []):
         if new_number_input == []:
             other = List_int_n_system_calculation(
@@ -121,4 +122,25 @@ class List_int_n_system_calculation():
 
         return other
 
+    
+    def __str__ (self): 
+        real_form = []
+        for digit in self.number:
+            real_form.append(self.rev_dictionary[digit])
 
+        real_str_form = ""
+        for i in real_form:
+            real_str_form += "_"
+            real_str_form += str(i)
+        return real_str_form[1:]
+
+
+    def __len__(self):
+        return len(self.number)
+
+    
+    def _two_of_numbers_to_equal_length (self, other): #example of use: a, b = a._two_of_numbers_to_equal_length(b), but this function is private
+        a = len(self)
+        b = len(other)
+        max_length = max(a, b)
+        return self.copy([0]*(max_length - a) + self.number), other.copy([0]*(max_length - b) + other.number)

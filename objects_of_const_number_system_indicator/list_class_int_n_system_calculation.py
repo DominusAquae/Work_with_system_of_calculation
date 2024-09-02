@@ -7,10 +7,15 @@ class List_int_n_system_calculation():
         if alphabet_input != []:
             #cheking for uniqueness
             if len(alphabet_input) != len(set(alphabet_input)):
-                print("Error: alphabet_input is't a set")
+                print("Error: alphabet_input isn't a set")
                 exit(0)
+
+            # Cheking for attentiveness and data coincidence
             self.number_system_indicator = len(alphabet_input)
-            # Let's create alphabet_input, because we can
+                if number_system_indicator_input!=0 and number_system_indicator_input != self.number_system_indicator:
+                    print("Error: number_system_indicator doesn't match the entered data during object initialization")
+                    
+            
             # May be two dictionarys can help me in the futures
             self.dictionary = dictionary_input
             self.rev_dictionary = rev_dictironary_input
@@ -56,7 +61,7 @@ class List_int_n_system_calculation():
             self.dictionary = dictionary_input
             self.rev_dictionary = rev_dictironary_input
             
-            #For fust copy of number we can create not all of self.object 
+            #For fast copy of number we can create not all of self.object 
             if self.dictionary == {} and self.rev_dictionary == {}:
                 for i in range(self.number_system_indicator):
                     self.dictionary[alphabet_input[i]] = i

@@ -252,11 +252,3 @@ class int_n_system_calculation():
             list_for_summ.append(int_n_system_calculation(result, self.number_system_indicator))
         
         return int_n_system_calculation.sum_of_list_n_system_calculation(list_for_summ)
-            
-if __name__ == "__main__":
-        a = input()
-        b = input()
-        n = int(input())
-        alfa = int_n_system_calculation(a, n)
-        beta = int_n_system_calculation(b, n)
-        print(f"ответ: {(beta - alfa)}")

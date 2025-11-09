@@ -12,8 +12,8 @@ class List_int_n_system_calculation():
 
             # Cheking for attentiveness and data coincidence
             self.number_system_indicator = len(alphabet_input)
-                if number_system_indicator_input!=0 and number_system_indicator_input != self.number_system_indicator:
-                    print("Error: number_system_indicator doesn't match the entered data during object initialization")
+            if number_system_indicator_input!=0 and number_system_indicator_input != self.number_system_indicator:
+                print("Error: number_system_indicator doesn't match the entered data during object initialization")
                     
             
             # May be two dictionarys can help me in the futures
@@ -143,8 +143,8 @@ class List_int_n_system_calculation():
     def __len__ (self):
         return len(self.number)
 
-    
-    def _two_of_numbers_to_equal_length (self, other): #example of use: a, b = a._two_of_numbers_to_equal_length(b), but this function is private
+    @staticmethod
+    def _two_of_numbers_to_equal_length (self, other):
         a = len(self)
         b = len(other)
         max_length = max(a, b)
@@ -156,7 +156,7 @@ class List_int_n_system_calculation():
 
     def __eq__ (self, other): # self == other
         # self.number_system_indicator = other.number_system_indicator
-        self, other = self._two_of_numbers_to_equal_length(other)
+        self, other = List_int_n_system_calculation._two_of_numbers_to_equal_length(self, other)
         if self.number == other.number:
             return True
         else:
@@ -164,7 +164,7 @@ class List_int_n_system_calculation():
 
     
     def __ne__ (self, other): # self != other
-        self, other = self._two_of_numbers_to_equal_length(other)
+        self, other = List_int_n_system_calculation._two_of_numbers_to_equal_length(self, other)
         if self.number != other.number:
             return True
         else:
@@ -172,7 +172,7 @@ class List_int_n_system_calculation():
         
 
     def __lt__ (self, other): # self < other
-        self, other = self._two_of_numbers_to_equal_length(other)
+        self, other = List_int_n_system_calculation._two_of_numbers_to_equal_length(self, other)
          
         if self.number == other.number:
             return False
@@ -186,7 +186,7 @@ class List_int_n_system_calculation():
 
     
     def __gt__ (self, other): # self > other
-        self, other = self._two_of_numbers_to_equal_length(other)
+        self, other = List_int_n_system_calculation._two_of_numbers_to_equal_length(self, other)
 
         if self.number == other.number:
             return False
@@ -202,7 +202,7 @@ class List_int_n_system_calculation():
 
     
     def __le__ (self, other): # self <= other
-        self, other = self._two_of_numbers_to_equal_length(other)
+        self, other = List_int_n_system_calculation._two_of_numbers_to_equal_length(self, other)
          
         if self.number == other.number:
             return True
@@ -216,7 +216,7 @@ class List_int_n_system_calculation():
 
     
     def __ge__ (self, other): # self >= other
-        self, other = self._two_of_numbers_to_equal_length(other)
+        self, other = List_int_n_system_calculation._two_of_numbers_to_equal_length(self, other)
 
         if self.number == other.number:
             return True

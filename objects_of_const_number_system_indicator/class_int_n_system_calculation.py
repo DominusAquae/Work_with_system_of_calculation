@@ -1,47 +1,3 @@
-def N_numbers_to_equal_length(array : list):
-        """
-        For further work, you will need to reduce the list of values to one number length.
-        In order not to increase the number of functions,
-        I introduce a common function to obtain equal lengths for a number of values at once.
-        """
-        mx = 0
-        for i in range(len(array)):
-            if len(array[i]) > mx:
-                mx = len(array[i])
-        
-        for i in range(len(array)):
-            array[i].number = array[i].number.rjust(mx, "0")
-        return array
-
-def sum_of_list_n_system_calculation(array : list):
-        
-        list_of_integers = N_numbers_to_equal_length(array)
-        # We denote the length of the number
-        len_of_every_number = len(list_of_integers[0]) - 1
-        # Create an empty string (in the future - the result of addition) and Transfer number from the upcoming category
-        result = ""
-        number_transfer_from_upcoming_place = 0
-
-        # Let's go cyclically through each digit of the given numbers in order to organize bitwise addition
-        digit = len_of_every_number
-        while number_transfer_from_upcoming_place != 0 or digit >= 0:
-
-            sum_n = number_transfer_from_upcoming_place
-
-            if digit >= 0:
-                for i in range(len(list_of_integers)):
-                    sum_n += list_of_integers[i].dictionary[list_of_integers[i].number[digit]]
-
-            result += list_of_integers[i].alphabet[sum_n % list_of_integers[i].number_system_indicator]
-            number_transfer_from_upcoming_place = sum_n // list_of_integers[i].number_system_indicator
-
-            digit -= 1
-        
-        # Since we wrote the number from right to left, we reverse the list
-        result = result[::-1]
-        return int_n_system_calculation(result, list_of_integers[i].number_system_indicator)
-
-
 class int_n_system_calculation():
     
     # boundary of application of the class - positional number system with the last digit z
@@ -70,7 +26,50 @@ class int_n_system_calculation():
         #Magic function to simplify code
         return len(self.number)
     
+    @staticmethod
+    def N_numbers_to_equal_length(array : list):
+        """
+        For further work, you will need to reduce the list of values to one number length.
+        In order not to increase the number of functions,
+        I introduce a common function to obtain equal lengths for a number of values at once.
+        """
+        mx = 0
+        for i in range(len(array)):
+            if len(array[i]) > mx:
+                mx = len(array[i])
+        
+        for i in range(len(array)):
+            array[i].number = array[i].number.rjust(mx, "0")
+        return array
 
+    def sum_of_list_n_system_calculation(array : list):
+        
+        list_of_integers = int_n_system_calculation.N_numbers_to_equal_length(array)
+        # We denote the length of the number
+        len_of_every_number = len(list_of_integers[0]) - 1
+        # Create an empty string (in the future - the result of addition) and Transfer number from the upcoming category
+        result = ""
+        number_transfer_from_upcoming_place = 0
+
+        # Let's go cyclically through each digit of the given numbers in order to organize bitwise addition
+        digit = len_of_every_number
+        while number_transfer_from_upcoming_place != 0 or digit >= 0:
+
+            sum_n = number_transfer_from_upcoming_place
+
+            if digit >= 0:
+                for i in range(len(list_of_integers)):
+                    sum_n += list_of_integers[i].dictionary[list_of_integers[i].number[digit]]
+
+            result += list_of_integers[i].alphabet[sum_n % list_of_integers[i].number_system_indicator]
+            number_transfer_from_upcoming_place = sum_n // list_of_integers[i].number_system_indicator
+
+            digit -= 1
+        
+        # Since we wrote the number from right to left, we reverse the list
+        result = result[::-1]
+        return int_n_system_calculation(result, list_of_integers[i].number_system_indicator)
+    
     def __str__(self):
         return self.number
 
@@ -79,7 +78,7 @@ class int_n_system_calculation():
         first_of_integers = self.copy()
         second_of_integers = other.copy()
         # We process the received data
-        list_of_integers = N_numbers_to_equal_length([first_of_integers, second_of_integers])
+        list_of_integers = int_n_system_calculation.N_numbers_to_equal_length([first_of_integers, second_of_integers])
         # Declare the resulting numbers
         first_of_integers = list_of_integers[1]
         second_of_integers = list_of_integers[0]
@@ -94,7 +93,7 @@ class int_n_system_calculation():
         first_of_integers = self.copy()
         second_of_integers = other.copy()
         # We process the received data
-        list_of_integers = N_numbers_to_equal_length([first_of_integers, second_of_integers])
+        list_of_integers = int_n_system_calculation.N_numbers_to_equal_length([first_of_integers, second_of_integers])
         # Declare the resulting numbers
         first_of_integers = list_of_integers[0]
         second_of_integers = list_of_integers[1]
@@ -141,7 +140,7 @@ class int_n_system_calculation():
 
     def __add__(self, other): 
         # We process the received data
-        list_of_integers = N_numbers_to_equal_length([self, other])
+        list_of_integers = int_n_system_calculation.N_numbers_to_equal_length([self, other])
         # Declare the resulting numbers
         first_of_integers = list_of_integers[0]
         second_of_integers = list_of_integers[1]
@@ -183,7 +182,7 @@ class int_n_system_calculation():
             self, other = other, self
 
         # We process the received data
-        list_of_integers = N_numbers_to_equal_length([self, other])
+        list_of_integers = int_n_system_calculation.N_numbers_to_equal_length([self, other])
         # Declare the resulting numbers
         first_of_integers = list_of_integers[1]
         second_of_integers = list_of_integers[0]
@@ -252,7 +251,7 @@ class int_n_system_calculation():
             result += "0"*(len(other) - 1 - digit_of_smallest_number)
             list_for_summ.append(int_n_system_calculation(result, self.number_system_indicator))
         
-        return sum_of_list_n_system_calculation(list_for_summ)
+        return int_n_system_calculation.sum_of_list_n_system_calculation(list_for_summ)
             
 if __name__ == "__main__":
         a = input()

@@ -1,6 +1,4 @@
 from class_int_n_system_calculation import int_n_system_calculation
-from class_int_n_system_calculation import N_numbers_to_equal_length
-from class_int_n_system_calculation import sum_of_list_n_system_calculation
 
 arr_add = []
 arr_sub = []

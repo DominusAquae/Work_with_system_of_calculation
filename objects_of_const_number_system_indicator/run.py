@@ -1,3 +1,10 @@
-from class_int_n_system_calculation import int_n_system_calculation
+from class_int_n_system_calculation import int_n_system_calculation as new_int
 
-#here you (me in the future) can use int_n_system_calculation without any changes of claas_int_n_system_calculation
+# Вариант решения задачи уравнивания длины нескольких чисел, более оптимальный
+def max_len_arr (arr):
+    return len(max(arr, key=len, default=0)) 
+
+def f (a, b):
+    return a + b
+
+print(f(new_int("9", 10), new_int("9", 10)))

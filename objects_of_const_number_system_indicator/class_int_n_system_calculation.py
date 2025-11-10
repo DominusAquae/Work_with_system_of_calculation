@@ -42,7 +42,7 @@ class int_n_system_calculation():
             array[i].number = array[i].number.rjust(mx, "0")
         return array
 
-    def sum_of_list_n_system_calculation(array : list):
+    def sum_of_list_n_system_calculation(array : list): # Алфавитная ошибка, функция требует полной реструктуризации
         
         list_of_integers = int_n_system_calculation.N_numbers_to_equal_length(array)
         # We denote the length of the number
@@ -61,7 +61,7 @@ class int_n_system_calculation():
                 for i in range(len(list_of_integers)):
                     sum_n += list_of_integers[i].dictionary[list_of_integers[i].number[digit]]
 
-            result += list_of_integers[i].alphabet[sum_n % list_of_integers[i].number_system_indicator]
+            result += list_of_integers[i].alphabet[sum_n % list_of_integers[i].number_system_indicator] # Алфавитная ошибка
             number_transfer_from_upcoming_place = sum_n // list_of_integers[i].number_system_indicator
 
             digit -= 1
@@ -138,7 +138,7 @@ class int_n_system_calculation():
             return False
         
 
-    def __add__(self, other): 
+    def __add__(self, other): # алфавитная ошибка, функцич требует полной реструктуризации
         # We process the received data
         list_of_integers = int_n_system_calculation.N_numbers_to_equal_length([self, other])
         # Declare the resulting numbers
@@ -163,11 +163,11 @@ class int_n_system_calculation():
             # When adding a Transfer number from the upcoming category, (we add the highest digit of the previous sum to the resulting value),
             # thus obtaining the final value in the same digit for the result of the entire calculation.
             number_help = a + b + number_transfer_from_upcoming_place
-            result += self.alphabet[(number_help)%self.number_system_indicator]
+            result += self.alphabet[(number_help)%self.number_system_indicator] # Алфавитная ошибка
             number_transfer_from_upcoming_place = (number_help)//self.number_system_indicator
 
         if number_transfer_from_upcoming_place != 0:
-            result += self.alphabet[number_transfer_from_upcoming_place]
+            result += self.alphabet[number_transfer_from_upcoming_place] # Алфавитная ошибка
             # it may be:
             # result += "1"
 
@@ -176,7 +176,7 @@ class int_n_system_calculation():
         return int_n_system_calculation(result, self.number_system_indicator)
 
 
-    def __sub__(self, other):#by modulo
+    def __sub__(self, other):# алфавитная ошибка, функцич требует полной реструктуризации
         
         if self < other:
             self, other = other, self
@@ -203,12 +203,12 @@ class int_n_system_calculation():
             # If the number being reduced is less than the sum of the subtracted and the addend from the previous digit,
             # Then we add to the current minuend a number equal to the base of the number system.
             if a < b + number_transfer_from_upcoming_place:
-                result += self.alphabet[a - number_transfer_from_upcoming_place - b + self.number_system_indicator]
+                result += self.alphabet[a - number_transfer_from_upcoming_place - b + self.number_system_indicator] # Алфавитная ошибка
                 # And we write down in the the number of transfer from the upcoming plece that there was a transfer.
                 number_transfer_from_upcoming_place = 1
             else:
                 # Otherwise, we simply subtract
-                result += self.alphabet[a - number_transfer_from_upcoming_place - b]
+                result += self.alphabet[a - number_transfer_from_upcoming_place - b] # Алфавитная ошибка
                 number_transfer_from_upcoming_place = 0
 
         # Since we wrote the number from right to left, we reverse the list
@@ -224,9 +224,9 @@ class int_n_system_calculation():
             i += 1
         result = result[i:]
         return int_n_system_calculation(result, self.number_system_indicator)
+    
 
-
-    def __mul__(self, other):
+    def __mul__(self, other): # алфавитная ошибка, функцич требует полной реструктуризации
         
         list_for_summ = []
         if self < other:
@@ -241,11 +241,11 @@ class int_n_system_calculation():
             
             for digit_of_biggest_number in range(len(self) - 1, -1, -1):
                 product_of_numbers = self.dictionary[self.number[digit_of_biggest_number]] * dig_smallest_number + number_transfer_from_upcoming_place
-                result += self.alphabet[product_of_numbers%self.number_system_indicator]
+                result += self.alphabet[product_of_numbers%self.number_system_indicator] # Алфавитная ошибка
                 number_transfer_from_upcoming_place = product_of_numbers // self.number_system_indicator
             
             if number_transfer_from_upcoming_place != 0:
-                result += self.alphabet[number_transfer_from_upcoming_place]
+                result += self.alphabet[number_transfer_from_upcoming_place] # Алфавитная ошибка
             
             result = result[::-1]
             result += "0"*(len(other) - 1 - digit_of_smallest_number)

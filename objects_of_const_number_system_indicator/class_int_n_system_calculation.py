@@ -16,6 +16,8 @@ class int_n_system_calculation():
         for i in range(self.number_system_indicator):
             self.dictionary[self.alphabet[i]] = i
 
+    def __repr__(self):
+        return f"{self.number}_{self.number_system_indicator}"
 
     def copy(self):
         number_copy = self.number

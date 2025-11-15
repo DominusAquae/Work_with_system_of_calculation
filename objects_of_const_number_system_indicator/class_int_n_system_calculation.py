@@ -29,16 +29,13 @@ class int_n_system_calculation():
         return len(self.number)
     
     @staticmethod
-    def N_numbers_to_equal_length(array : list):
+    def __N_numbers_to_equal_length__(array : list):
         """
         For further work, you will need to reduce the list of values to one number length.
         In order not to increase the number of functions,
         I introduce a common function to obtain equal lengths for a number of values at once.
         """
-        mx = 0
-        for i in range(len(array)):
-            if len(array[i]) > mx:
-                mx = len(array[i])
+        mx = len(max(array, key=len, default=0)) 
         
         for i in range(len(array)):
             array[i].number = array[i].number.rjust(mx, "0")

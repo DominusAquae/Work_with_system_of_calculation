@@ -139,7 +139,11 @@ class int_n_system_calculation():
 
     def __add__(self, other): # алфавитная ошибка, функцич требует полной реструктуризации
         # We process the received data
-        list_of_integers = int_n_system_calculation.__N_numbers_to_equal_length__([self, other])
+        first_of_integers = self.copy()
+        second_of_integers = other.copy()
+        # We process the received data
+        list_of_integers = int_n_system_calculation.__N_numbers_to_equal_length__([first_of_integers, second_of_integers])
+        
         # Declare the resulting numbers
         first_of_integers = list_of_integers[0]
         second_of_integers = list_of_integers[1]

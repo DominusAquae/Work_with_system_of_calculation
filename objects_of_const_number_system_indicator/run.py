@@ -1,13 +1,42 @@
 from class_int_n_system_calculation import int_n_system_calculation as new_int
 
 # Вариант решения задачи уравнивания длины нескольких чисел, более оптимальный
-def max_len_arr (arr):
-    return len(max(arr, key=len, default=0)) 
-arr = [new_int("10", 10), new_int("11", 10)]
-print(new_int.N_numbers_to_equal_length(arr))
 
-arr = [new_int("10", 2), new_int("1", 30)]
-print(new_int.N_numbers_to_equal_length(arr))
+a = new_int("999", 10)
+b = new_int("111", 10)
 
-arr = [new_int("10000", 3), new_int("11890888888", 10)]
-print(new_int.N_numbers_to_equal_length(arr))
+print(a + b)
+
+a = new_int("0", 10)
+b = new_int("111", 10)
+
+print(a + b)
+
+
+a = new_int("0", 10)
+b = new_int("0", 10)
+
+print(a + b)
+
+a = new_int("15", 10)
+b = new_int("15", 10)
+
+print(a + b)
+
+
+a = new_int("14", 10)
+b = new_int("15", 10)
+
+print(a + b)
+
+
+a = new_int("14", 15)
+b = new_int("15", 15)
+
+print(a + b)
+
+
+a = new_int("15", 15)
+b = new_int("18", 15)
+
+print(a + b)

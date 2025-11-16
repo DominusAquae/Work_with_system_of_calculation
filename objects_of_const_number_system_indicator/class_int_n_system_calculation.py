@@ -43,7 +43,7 @@ class int_n_system_calculation():
 
     def sum_of_list_n_system_calculation(array : list): # Алфавитная ошибка, функция требует полной реструктуризации
         
-        list_of_integers = int_n_system_calculation.N_numbers_to_equal_length(array)
+        list_of_integers = int_n_system_calculation.__N_numbers_to_equal_length__(array)
         # We denote the length of the number
         len_of_every_number = len(list_of_integers[0]) - 1
         # Create an empty string (in the future - the result of addition) and Transfer number from the upcoming category
@@ -77,7 +77,7 @@ class int_n_system_calculation():
         first_of_integers = self.copy()
         second_of_integers = other.copy()
         # We process the received data
-        list_of_integers = int_n_system_calculation.N_numbers_to_equal_length([first_of_integers, second_of_integers])
+        list_of_integers = int_n_system_calculation.__N_numbers_to_equal_length__([first_of_integers, second_of_integers])
         # Declare the resulting numbers
         first_of_integers = list_of_integers[1]
         second_of_integers = list_of_integers[0]
@@ -92,7 +92,7 @@ class int_n_system_calculation():
         first_of_integers = self.copy()
         second_of_integers = other.copy()
         # We process the received data
-        list_of_integers = int_n_system_calculation.N_numbers_to_equal_length([first_of_integers, second_of_integers])
+        list_of_integers = int_n_system_calculation.__N_numbers_to_equal_length__([first_of_integers, second_of_integers])
         # Declare the resulting numbers
         first_of_integers = list_of_integers[0]
         second_of_integers = list_of_integers[1]
@@ -139,7 +139,7 @@ class int_n_system_calculation():
 
     def __add__(self, other): # алфавитная ошибка, функцич требует полной реструктуризации
         # We process the received data
-        list_of_integers = int_n_system_calculation.N_numbers_to_equal_length([self, other])
+        list_of_integers = int_n_system_calculation.__N_numbers_to_equal_length__([self, other])
         # Declare the resulting numbers
         first_of_integers = list_of_integers[0]
         second_of_integers = list_of_integers[1]
@@ -147,8 +147,8 @@ class int_n_system_calculation():
         self.len_of_every_number = len(first_of_integers)
 
         # Create an empty string (in the future - the result of addition) and Transfer number from the upcoming category
-        result = ""
-        number_transfer_from_upcoming_place = 0
+        result = []
+        number_transfer_from_upcoming_place = False
 
         # Let's go cyclically through each digit of the given numbers in order to organize bitwise addition
         for i in range(self.len_of_every_number - 1, -1, -1):
@@ -157,22 +157,25 @@ class int_n_system_calculation():
             a = self.dictionary[first_of_integers.number[i]]
             b = other.dictionary[second_of_integers.number[i]]
 
-            # When summing such two decimal numbers and taking the remainder of the resulting number,
-            # a decimal number is obtained, which is the lowest digit of the sum of the total digit of the original numbers. 
-            # When adding a Transfer number from the upcoming category, (we add the highest digit of the previous sum to the resulting value),
-            # thus obtaining the final value in the same digit for the result of the entire calculation.
-            number_help = a + b + number_transfer_from_upcoming_place
-            result += self.alphabet[(number_help)%self.number_system_indicator] # Алфавитная ошибка
-            number_transfer_from_upcoming_place = (number_help)//self.number_system_indicator
+            # I have adapted algorithm from https://cp-algorithms.com/algebra/big-integer.html 
+            number_help = a + b + int(number_transfer_from_upcoming_place)
+            number_transfer_from_upcoming_place = number_help >= self.number_system_indicator
+            if number_transfer_from_upcoming_place:
+                number_help -= self.number_system_indicator
 
-        if number_transfer_from_upcoming_place != 0:
-            result += self.alphabet[number_transfer_from_upcoming_place] # Алфавитная ошибка
+            result.append(number_help)
+
+        if number_transfer_from_upcoming_place:
+            result.append(1)
             # it may be:
             # result += "1"
 
-        # Since we wrote the number from right to left, we reverse the list
-        result = result[::-1]
-        return int_n_system_calculation(result, self.number_system_indicator)
+        # Bitwise conversion of number
+        result_str = "" 
+        for i in result[::-1]:
+            result_str += self.alphabet[i]
+
+        return int_n_system_calculation(result_str, self.number_system_indicator)
 
 
     def __sub__(self, other):# алфавитная ошибка, функцич требует полной реструктуризации
@@ -181,7 +184,7 @@ class int_n_system_calculation():
             self, other = other, self
 
         # We process the received data
-        list_of_integers = int_n_system_calculation.N_numbers_to_equal_length([self, other])
+        list_of_integers = int_n_system_calculation.__N_numbers_to_equal_length__([self, other])
         # Declare the resulting numbers
         first_of_integers = list_of_integers[1]
         second_of_integers = list_of_integers[0]

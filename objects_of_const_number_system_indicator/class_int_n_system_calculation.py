@@ -73,6 +73,7 @@ class int_n_system_calculation():
         return self.number
 
 
+    #for every operand assumed, that base of numbers is equal (else return False in eq operands and None in other cases)
     def __eq__ (self, other): # self == other
         first_of_integers = self.copy()
         second_of_integers = other.copy()
@@ -87,8 +88,24 @@ class int_n_system_calculation():
         else:
             return False
 
+    def __ne__ (self, other): # self != other
+        first_of_integers = self.copy()
+        second_of_integers = other.copy()
+        # We process the received data
+        list_of_integers = int_n_system_calculation.__N_numbers_to_equal_length__([first_of_integers, second_of_integers])
+        # Declare the resulting numbers
+        first_of_integers = list_of_integers[1]
+        second_of_integers = list_of_integers[0]
+        if first_of_integers.number == second_of_integers.number and first_of_integers.number_system_indicator == second_of_integers.number_system_indicator:
+            return False
+        else:
+            return True
+        
 
     def __lt__ (self, other): # self < other
+        if self.number_system_indicator != other.number_system_indicator:
+            return None
+
         first_of_integers = self.copy()
         second_of_integers = other.copy()
         # We process the received data
@@ -97,44 +114,81 @@ class int_n_system_calculation():
         first_of_integers = list_of_integers[0]
         second_of_integers = list_of_integers[1]
 
-        if first_of_integers == second_of_integers:
-            return False
-        else:
+        if first_of_integers != second_of_integers:
             digit = len(first_of_integers)
-            while (digit <= 0):
-                if  (first_of_integers[digit - 1] < second_of_integers[digit - 1]):
+            while (digit > 0):
+                if  (first_of_integers.number[digit - 1] <= second_of_integers.number[digit - 1]):
                     digit -= 1
                 else:
                     return False
-        return True
-
-
-    def __ne__ (self, other): # self != other
-        if self == other:
-            return False
-        else:
             return True
+        else:
+            return False
         
 
     def __gt__ (self, other): # self > other
-        if (not(self == other)) and (not(self < other)):
+        if self.number_system_indicator != other.number_system_indicator:
+            return None
+
+        first_of_integers = self.copy()
+        second_of_integers = other.copy()
+        # We process the received data
+        list_of_integers = int_n_system_calculation.__N_numbers_to_equal_length__([first_of_integers, second_of_integers])
+        # Declare the resulting numbers
+        first_of_integers = list_of_integers[0]
+        second_of_integers = list_of_integers[1]
+
+        if first_of_integers != second_of_integers:
+            digit = len(first_of_integers)
+            while (digit > 0):
+                if  (first_of_integers.number[digit - 1] >= second_of_integers.number[digit - 1]):
+                    digit -= 1
+                else:
+                    return False
             return True
         else:
             return False
         
     
     def __le__ (self, other): # self <= other
-        if (self < other) or (self == other):
-            return True
-        else:
-            return False
+        if self.number_system_indicator != other.number_system_indicator:
+            return None
+
+        first_of_integers = self.copy()
+        second_of_integers = other.copy()
+        # We process the received data
+        list_of_integers = int_n_system_calculation.__N_numbers_to_equal_length__([first_of_integers, second_of_integers])
+        # Declare the resulting numbers
+        first_of_integers = list_of_integers[0]
+        second_of_integers = list_of_integers[1]
+        digit = len(first_of_integers)
+        while (digit > 0):
+            if  (first_of_integers.number[digit - 1] <= second_of_integers.number[digit - 1]):
+                digit -= 1
+            else:
+                return False
+        return True
         
 
     def __ge__ (self, other): #self >= other
-        if not(self < other):
-            return True
-        else:
-            return False
+        if self.number_system_indicator != other.number_system_indicator:
+            return None
+
+        first_of_integers = self.copy()
+        second_of_integers = other.copy()
+        # We process the received data
+        list_of_integers = int_n_system_calculation.__N_numbers_to_equal_length__([first_of_integers, second_of_integers])
+        # Declare the resulting numbers
+        first_of_integers = list_of_integers[0]
+        second_of_integers = list_of_integers[1]
+
+        digit = len(first_of_integers)
+        while (digit > 0):
+            if  (first_of_integers.number[digit - 1] >= second_of_integers.number[digit - 1]):
+                digit -= 1
+            else:
+                return False
+        return True
         
 
     def __add__(self, other): # алфавитная ошибка, функцич требует полной реструктуризации
@@ -143,7 +197,7 @@ class int_n_system_calculation():
         second_of_integers = other.copy()
         # We process the received data
         list_of_integers = int_n_system_calculation.__N_numbers_to_equal_length__([first_of_integers, second_of_integers])
-        
+
         # Declare the resulting numbers
         first_of_integers = list_of_integers[0]
         second_of_integers = list_of_integers[1]

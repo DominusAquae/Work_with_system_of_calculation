@@ -11,9 +11,9 @@
 ### main
 В ветке main будут выкладываться актуальные версии после релиза, которые готовы к использованию. Сейчас ветка пустая, так как нет ни одной достоверно работающей версии проекта.
 ### master
-В ветке master сейчас разработка наиболее проверенной и протестированной версии, однако урезанной версии предполагаемой версии с минимальным функционалом. Последующее использование ветки master предполагает, что именно здесь будет находиться версия, находящаяся в разработке. 
+В ветке master сейчас разработка наиболее проверенной и протестированной версии, ближайшей к версии предполагаемой версии с минимальным функционалом. Последующее использование ветки master предполагает, что именно здесь будет находиться версия, находящаяся в разработке. 
 ### reliably_true
-В Ветке reliably_true сейчас разработка проверенной версии, однако реализация исключительно класса натуральных чисел. После реализации этого класса, будет первая релизная версия и ветка потеряет свою актуальность.
+В ветке reliably_true сейчас разработка проверенной версии, однако реализация исключительно класса натуральных чисел. После реализации этого класса, будет первая релизная версия и ветка потеряет свою актуальность.
 ### pre-alfa
 В ветке pre-alfa сейчас находится основа версии, которая далее будет использоваться для разработки, однако сейчас структура файлов и программ не представляет возможным их исправление или тестирование. Ветку ждёт рефакторинг, а далее слияние с функционалом ветки main.
 ## Минимальная версия релиза
@@ -48,9 +48,11 @@ It is also planned to create 4 classes for float type numbers, 4 classes for Fra
 ### main
 The main branch will contain the latest versions after the release, which are ready for use. The branch is currently empty, as there is not a single reliably working version of the project.
 ### master
-The master branch is currently developing the most proven and tested version, but a stripped-down version of the intended version with minimal functionality. Subsequent use of the master branch assumes that this is where the version under development will be located.
+The master branch is currently developing the most proven and tested version, the closest to the version of the intended version with minimal functionality. Subsequent use of the master branch assumes that this is where the version under development will be located.
 ### pre-alfa
 The pre-alfa branch currently contains the basis of the version that will be used for development, but now the structure of files and programs does not make it possible to fix or test them. The branch is waiting for refactoring, and then merging with the functionality of the main branch.
+### reliably_true
+A proven version is currently being developed in the reliably_true branch, but the implementation is exclusively for the natural numbers class. After the implementation of this class, the first release version will be released and the branch will lose its relevance.
 ## Minimum release version
 It involves the inclusion of the following:
 
